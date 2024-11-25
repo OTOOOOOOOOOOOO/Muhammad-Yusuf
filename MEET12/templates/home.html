@@ -1,0 +1,119 @@
+{% extends 'layout.html' %}
+
+{% block konten %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #212529;">Welcome to Animal Info</h1>
+    <div class="text-end mb-3">
+        <button id="themeSwitcher" class="btn btn-outline-secondary">Switch to Night Mode</button>
+    </div>
+
+    <div class="card shadow-lg p-4 bg-light" id="formContainer">
+        <h4 class="mb-3">Add New Animal</h4>
+        <form action="/simpan" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Animal Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Animal Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country" placeholder="Enter Country" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </form>
+        
+    </div>
+    <div id="feedbackMessage" class="mt-4">
+    </div>
+</div>
+
+<script>
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    const formContainer = document.getElementById('formContainer');
+    const body = document.body;
+
+    themeSwitcher.addEventListener('click', () => {
+        if (body.classList.contains('night-mode')) {
+            body.classList.remove('night-mode');
+            body.classList.add('light-mode');
+            themeSwitcher.textContent = 'Switch to Night Mode';
+            themeSwitcher.classList.replace('btn-dark', 'btn-outline-secondary');
+            formContainer.classList.replace('bg-dark', 'bg-light');
+            formContainer.classList.replace('text-white', 'text-dark');
+        } else {
+            body.classList.add('night-mode');
+            body.classList.remove('light-mode');
+            themeSwitcher.textContent = 'Switch to Light Mode';
+            themeSwitcher.classList.replace('btn-outline-secondary', 'btn-dark');
+            formContainer.classList.replace('bg-light', 'bg-dark');
+            formContainer.classList.replace('text-dark', 'text-white');
+        }
+    });
+
+    body.classList.add('light-mode');
+</script>
+
+<style>
+  .light-mode {
+      background-color: #f8f9fa;
+      color: #212529;
+  }
+
+  .night-mode {
+      background-color: #212529;
+      color: #f8f9fa;
+  }
+
+  .night-mode .form-control,
+  .night-mode .form-select {
+      background-color: #343a40;
+      color: #f8f9fa;  
+      border-color: #495057; 
+  }
+
+  .night-mode .form-control::placeholder,
+  .night-mode .form-select::placeholder {
+      color: #ced4da;
+  }
+
+  .night-mode .form-control,
+  .night-mode .form-select {
+      color: #f8f9fa; 
+  }
+
+  .night-mode .form-label {
+      color: #f8f9fa; 
+  }
+
+  .night-mode h4 {
+      color: #f8f9fa; 
+  }
+
+  .card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #feedbackMessage {
+      display: none;
+  }
+
+  #feedbackMessage.success {
+      display: block;
+      color: #28a745;
+  }
+
+  #feedbackMessage.error {
+      display: block;
+      color: #dc3545;
+  }
+</style>
+
+{% endblock %}
